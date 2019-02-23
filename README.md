@@ -34,3 +34,7 @@ Description:
 
 * [Accessing Data with MongoDB](https://spring.io/guides/gs/accessing-data-mongodb/)
 
+note:
+Large file used as a test data for Splitter service is located in :
+challenge/src/test/resources/fixtures/enwiki-latest-abstract.xml
+
