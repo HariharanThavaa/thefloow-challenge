@@ -8,12 +8,10 @@ import org.junit.Test;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.NoSuchFileException;
 import java.nio.file.Paths;
 
 import static com.thefloow.challenge.helper.TestConstantsUtil.mBperSplit;
 import static com.thefloow.challenge.helper.TestConstantsUtil.FIXTURES_LARGE_FILE_AB_PATH;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 @Slf4j

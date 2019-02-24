@@ -2,7 +2,6 @@ package com.thefloow.challenge.service;
 
 import com.thefloow.challenge.exception.FileReadingException;
 
-import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 
