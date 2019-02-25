@@ -2,7 +2,7 @@
 
 To execute the file :
 
-java –Xmx8192m -jar challenge.jar –source dump.xml
+java -jar challenge.jar –source dump.xml
 
 1. FileSplitterService -
  * Split the large file in to smaller chunks
