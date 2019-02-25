@@ -9,6 +9,7 @@ import java.nio.file.Path;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class WordCounterServiceImpl implements WordCounterService {
@@ -20,7 +21,9 @@ public class WordCounterServiceImpl implements WordCounterService {
         try{
             return Files.lines(filePath)
                     .parallel()
+                    .flatMap(line -> Stream.of(line.split("\\s+")))
                     .map(word -> word.replaceAll("[^a-zA-Z]", "").toLowerCase().trim())
+                    .map(word -> word.replaceAll("-", ""))
                     .filter(word -> !word.isEmpty())
                     .collect(Collectors.groupingBy(
                             Function.identity(), Collectors.counting()));

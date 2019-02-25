@@ -11,7 +11,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import static com.thefloow.challenge.helper.TestConstantsUtil.mBperSplit;
-import static com.thefloow.challenge.helper.TestConstantsUtil.FIXTURES_LARGE_FILE_AB_PATH;
+import static com.thefloow.challenge.helper.TestConstantsUtil.FIXTURES_FILE_AB_PATH;
 import static org.junit.Assert.assertTrue;
 
 @Slf4j
@@ -40,16 +40,16 @@ public class FileSplitterServiceImplUTest {
     @Test
     public void givenValidFileAndValidSplitSize_whenSplitFile_thenReturnExpected() throws FileReadingException {
         try{
-            final long sourceSize = Files.size(Paths.get(FIXTURES_LARGE_FILE_AB_PATH));
+            final long sourceSize = Files.size(Paths.get(FIXTURES_FILE_AB_PATH));
             final long bytesPerSplit = 1024L * 1024L * mBperSplit;
-            classUnderTest.splitFile(FIXTURES_LARGE_FILE_AB_PATH);
+            classUnderTest.splitFile(FIXTURES_FILE_AB_PATH);
             File directory=new File("/tmp/");
             int fileCount=directory.list().length;
             log.info("number of files :: " + fileCount);
             log.info("It should be greater than :: " + sourceSize/bytesPerSplit);
             assertTrue(fileCount >sourceSize/bytesPerSplit);
         }catch (IOException e){
-            throw new FileReadingException(String.format(ERROR_LOADING_LARGE_FILE, FIXTURES_LARGE_FILE_AB_PATH), e);
+            throw new FileReadingException(String.format(ERROR_LOADING_LARGE_FILE, FIXTURES_FILE_AB_PATH), e);
         }
     }
 }

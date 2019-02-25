@@ -1,8 +1,8 @@
 # The Floow Challenge
 
-### Monolith first approach
+execute the file :
 
-Starting with a monolith first approach, Identified below services in whiteboard discussion.
+java –Xmx8192m -jar challenge.jar –source dump.xml
 
 1. FileSplitterService -
 Description ::
@@ -19,22 +19,14 @@ Description ::
 3. DataUpsertService
 Description:
  * Given HashMap with words and counts
- * update or insert Data
+ * Save the Top 10 (configurable in application. properties) most and least common words in the file
 
-4. ChallengeReportService
-Description:
- * Report on statistically interesting words (in addition to the least and most common words)
- * By querying the datastore
-
-5. CommandLineRunner
+4. CommandLineRunner
 Description:
  * Input validation
  * Trigger the execution
+ * display the output
 
-
-* [Accessing Data with MongoDB](https://spring.io/guides/gs/accessing-data-mongodb/)
-
-note:
-Large file used as a test data for Splitter service is located in :
-challenge/src/test/resources/fixtures/enwiki-latest-abstract.xml
+Note:
+Application is fine tuned to produce a report of 5.61 GB file in 9 minutes.
 

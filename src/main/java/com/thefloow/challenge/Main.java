@@ -18,6 +18,10 @@ import java.util.*;
 @Component
 public class Main implements CommandLineRunner {
 
+    public static final String VALID_INPUT_FORMAT =
+            "Expected Format:\n java –Xmx8192m -jar challenge.jar –source dump.xml –mongo [hostname]:[port]\n "
+                    + "dump.xml - path to the large file to process";
+
     private final FileSplitterService fileSplitterService;
     private final WordCounterService counterService;
     private final DataService dataService;
@@ -37,21 +41,39 @@ public class Main implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        log.info(String.valueOf(repository.count()));
-        repository.deleteAll();
+        if (args.length != 2) {
+            System.out.println(VALID_INPUT_FORMAT);
+            return;
+        }
+        try {
+            printResult(args[1]);
+        } catch (NumberFormatException ignore) {
+            System.out.println(VALID_INPUT_FORMAT);
+        } catch (FileReadingException FRE) {
+            System.out.println(FRE.toString());
+        }
+    }
+
+    private void printResult(String largeFile) throws Exception{
+
+        Word word = repository.findByFileName(largeFile);
+        if(word != null){
+            repository.delete(word);
+        }
         log.info(String.valueOf(repository.count()));
 
         long lStartTime = System.currentTimeMillis();
-        String largeFile = "/Users/thavaahariharan/work/Floow/workspace/challenge/src/test/resources/fixtures/enwiki-latest-abstract.xml";
+
         fileSplitterService.splitFile(largeFile).stream()
                 .forEach(path -> dataService.save(largeFile, count(path)));
 
-        Word word = repository.findByFileName(largeFile);
-        log.info(word.toString());
+        word = repository.findByFileName(largeFile);
+        System.out.println(word.toString());
 
         long lEndTime = System.currentTimeMillis();
         long output = lEndTime - lStartTime;
         log.info("Latency/Time Delay : " + output);
+
     }
 
     private Map<String,Long> count(Path path){

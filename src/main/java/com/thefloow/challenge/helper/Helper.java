@@ -20,31 +20,36 @@ public class Helper {
     public Map< String, Long> getWordCountMap(Map< String, Long> existingMap,
                                                         Map< String, Long> newMap,
                                                         int numberOfWinners, Query query){
+
         if(!existingMap.isEmpty()){
             if (!newMap.isEmpty()){
+                newMap.forEach((k,v) -> merge(existingMap, k, v));
                 if(Query.MOST_COMMON_WORDS.equals(query)){
-                    return getMostCommonWordsMap(existingMap, newMap, numberOfWinners);
+                    return getMostCommonWordsMap(existingMap, numberOfWinners);
                 }
 
                 if(Query.LEAST_COMMON_WORDS.equals(query)){
-                    return getLeastCommonWordsMap(existingMap, newMap, numberOfWinners);
+                    return getLeastCommonWordsMap(existingMap, numberOfWinners);
                 }
-
             }
             return existingMap;
+        }else{
+            if (!newMap.isEmpty()){
+                if(Query.MOST_COMMON_WORDS.equals(query)){
+                    return getMostCommonWordsMap(newMap, numberOfWinners);
+                }
+                if(Query.LEAST_COMMON_WORDS.equals(query)){
+                    return getLeastCommonWordsMap(newMap, numberOfWinners);
+                }
+            }
         }
-        if (!newMap.isEmpty()){
-            return newMap;
-        }
+
         return new HashMap<>();
     }
 
     private Map< String, Long> getMostCommonWordsMap(
             Map< String, Long> existingMap,
-            Map< String, Long> newMap,
             int numberOfWinners){
-        //my logic goes here
-        newMap.forEach((k,v) -> merge(existingMap, k, v));
         Map< String, Long> response = new LinkedHashMap<>();
         existingMap.entrySet()
                 .stream()
@@ -68,10 +73,7 @@ public class Helper {
 
     private Map< String, Long> getLeastCommonWordsMap(
             Map< String, Long> existingMap,
-            Map< String, Long> newMap,
             int numberOfWinners){
-        //my logic goes here
-        newMap.forEach((k,v) -> merge(existingMap, k, v));
         Map< String, Long> response = new LinkedHashMap<>();
         existingMap.entrySet()
                 .stream()
